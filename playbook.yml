@@ -3,3 +3,4 @@
   connection: local
   tasks:
   - debug: msg="it works!"
+  - command: sleep 100000000000

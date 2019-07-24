@@ -6,6 +6,8 @@ Docker Image of Ansible for executing ansible-playbook command against an extern
 
 ```
 docker build -t walokra/ansible-playbook .
+
+docker build -t rsynch/ansible-docker .
 ```
 
 ### Test
@@ -29,6 +31,8 @@ For example, assuming your project's structure follows [best practices](http://d
 
 ```
 docker run --rm -it -v $(pwd):/ansible/playbooks walokra/ansible-playbook playbook.yml
+
+docker run --rm --name docker-ansible -it -v $(pwd):/ansible/playbooks rsynch/ansible-docker playbook.yml
 ```
 
 Ansible playbook variables can simply be added after the playbook name.

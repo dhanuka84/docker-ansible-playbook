@@ -53,6 +53,11 @@ RUN set -x && \
     echo "[local]" >> /etc/ansible/hosts && \
     echo "localhost" >> /etc/ansible/hosts
 
+RUN apk add -U \
+    openssh-server \
+    rsync && \
+    rm -f /var/cache/apk/*
+
 ENV ANSIBLE_GATHERING smart
 ENV ANSIBLE_HOST_KEY_CHECKING false
 ENV ANSIBLE_RETRY_FILES_ENABLED false
