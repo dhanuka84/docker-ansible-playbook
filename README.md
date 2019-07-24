@@ -28,7 +28,7 @@ docker run --rm -it -v PATH_TO_LOCAL_PLAYBOOKS_DIR:/ansible/playbooks walokra/an
 For example, assuming your project's structure follows [best practices](http://docs.ansible.com/ansible/playbooks_best_practices.html#directory-layout), the command to run ansible-playbook from the top-level directory would look like:
 
 ```
-docker run --rm -it -v $(pwd):/ansible/playbooks walokra/ansible-playbook site.yml
+docker run --rm -it -v $(pwd):/ansible/playbooks walokra/ansible-playbook playbook.yml
 ```
 
 Ansible playbook variables can simply be added after the playbook name.
