@@ -69,4 +69,7 @@ ENV ANSIBLE_LIBRARY /ansible/library
 
 WORKDIR /ansible/playbooks
 
+RUN mkdir /ansible/playbooks/data
+RUN mkdir /ansible/playbooks/backup
+
 ENTRYPOINT ["ansible-playbook"]

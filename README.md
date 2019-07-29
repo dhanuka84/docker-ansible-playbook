@@ -85,3 +85,9 @@ Note: the Ansible Vault executable is embedded in this image. To use it, specify
 docker run --rm -it -v $(pwd):/ansible/playbooks --entrypoint ansible-vault \
   walokra/ansible-playbook encrypt FILENAME
 ```
+
+References:
+
+http://blog.diovani.com/technology/2017/06/24/moving-docker-containers-data.html
+
+
