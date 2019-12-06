@@ -15,6 +15,8 @@ docker build -t rsynch/ansible-docker .
 ```
 $ docker run --name ansible-playbook --rm walokra/ansible-playbook --version
 
+docker run --name ansible-playbook --rm rsynch/ansible-docker --version
+
 ansible-playbook 2.3.0.0
   config file =
   configured module search path = [u'/opt/ansible/library']

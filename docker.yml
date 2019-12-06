@@ -1,0 +1,19 @@
+---
+- hosts: docker
+#  gather_facts: no
+  tasks:
+
+
+  - name: Create container
+    docker_container:
+     name: docker-test
+    # docker_host: "tcp://localhost:22"
+     image: nitincypher/docker-ubuntu-python-pip:latest
+    # image: ansible:ubuntu16.04
+     command: sleep 1d
+     detach: true
+     interactive: true
+     tty: true
+    # tls_hostname: localhost
+     tls_verify: yes
+

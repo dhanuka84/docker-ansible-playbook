@@ -1,0 +1,16 @@
+[docker]
+192.168.0.114
+#10.255.65.160
+#localhost
+
+
+[all:vars]
+ansible_connection=ssh
+ansible_user=dhanuka
+ansible_ssh_pass=kithnuyuki
+#ansible_port=22
+#ansible_python_interpreter=python
+#ansible_python_interpreter=/usr/bin/python3
+
+[ssh_connection]
+#ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes

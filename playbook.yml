@@ -1,6 +1,5 @@
 ---
-- hosts: 127.0.0.1
-  connection: local
+- hosts: docker
   tasks:
   - debug: msg="it works!"
   - command: sleep 100000000000

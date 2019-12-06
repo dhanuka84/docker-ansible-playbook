@@ -1,75 +1,21 @@
-FROM alpine:3.7
+FROM ansible-docker:master-ubuntu16.04
 
-ENV ANSIBLE_VERSION 2.5.0
 
-ENV BUILD_PACKAGES \
-  bash \
-  curl \
-  tar \
-  openssh-client \
-  sshpass \
-  git \
-  python \
-  py-boto \
-  py-dateutil \
-  py-httplib2 \
-  py-jinja2 \
-  py-paramiko \
-  py-pip \
-  py-yaml \
-  ca-certificates
+# Authorize SSH Host
+RUN mkdir -p /root/.ssh && \
+    chmod 0700 /root/.ssh && \
+    ssh-keyscan 192.168.0.114  > /root/.ssh/known_hosts
 
-# If installing ansible@testing
-#RUN \
-#	echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> #/etc/apk/repositories
+# Add the keys and set permissions
+RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
+    echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && \
+    chmod 600 /root/.ssh/id_rsa && \
+    chmod 600 /root/.ssh/id_rsa.pub
 
-RUN set -x && \
-    \
-    echo "==> Adding build-dependencies..."  && \
-    apk --update add --virtual build-dependencies \
-      gcc \
-      musl-dev \
-      libffi-dev \
-      openssl-dev \
-      python-dev && \
-    \
-    echo "==> Upgrading apk and system..."  && \
-    apk update && apk upgrade && \
-    \
-    echo "==> Adding Python runtime..."  && \
-    apk add --no-cache ${BUILD_PACKAGES} && \
-    pip install --upgrade pip && \
-    pip install python-keyczar docker-py && \
-    \
-    echo "==> Installing Ansible..."  && \
-    pip install ansible==${ANSIBLE_VERSION} && \
-    \
-    echo "==> Cleaning up..."  && \
-    apk del build-dependencies && \
-    rm -rf /var/cache/apk/* && \
-    \
-    echo "==> Adding hosts for convenience..."  && \
-    mkdir -p /etc/ansible /ansible && \
-    echo "[local]" >> /etc/ansible/hosts && \
-    echo "localhost" >> /etc/ansible/hosts
+RUN echo "===> Install docker python module " && \
+    pip install docker
 
-RUN apk add -U \
-    openssh-server \
-    rsync && \
-    rm -f /var/cache/apk/*
 
-ENV ANSIBLE_GATHERING smart
-ENV ANSIBLE_HOST_KEY_CHECKING false
-ENV ANSIBLE_RETRY_FILES_ENABLED false
-ENV ANSIBLE_ROLES_PATH /ansible/playbooks/roles
-ENV ANSIBLE_SSH_PIPELINING True
-ENV PYTHONPATH /ansible/lib
-ENV PATH /ansible/bin:$PATH
-ENV ANSIBLE_LIBRARY /ansible/library
-
-WORKDIR /ansible/playbooks
-
-RUN mkdir /ansible/playbooks/data
-RUN mkdir /ansible/playbooks/backup
+ENV PATH        /usr/local/lib/python2.7/dist-packages/docker:$PATH
 
 ENTRYPOINT ["ansible-playbook"]
